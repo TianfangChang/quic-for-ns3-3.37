@@ -1,0 +1,76 @@
+check_include_file_cxx(stdint.h HAVE_STDINT_H)
+if(HAVE_STDINT_H)
+    add_definitions(-DHAVE_STDINT_H)
+endif()
+
+set(examples_as_tests_sources)
+if(${ENABLE_EXAMPLES})
+    set(examples_as_tests_sources
+        #test/dgr-examples-test-suite.cc
+        )
+endif()
+
+build_lib(
+    LIBNAME quic
+    SOURCE_FILES
+        model/quic-congestion-ops.cc
+        model/quic-socket.cc
+        model/quic-socket-base.cc
+        model/quic-socket-factory.cc
+        model/quic-l4-protocol.cc
+        model/quic-socket-rx-buffer.cc
+        model/quic-socket-tx-buffer.cc
+        model/quic-socket-tx-scheduler.cc
+        model/quic-socket-tx-pfifo-scheduler.cc
+        model/quic-socket-tx-edf-scheduler.cc
+        model/quic-stream.cc
+        model/quic-stream-base.cc
+        model/quic-l5-protocol.cc
+        model/quic-stream-tx-buffer.cc
+        model/quic-stream-rx-buffer.cc
+        model/quic-header.cc
+        model/quic-subheader.cc
+        model/quic-transport-parameters.cc
+        model/quic-bbr.cc
+        helper/quic-helper.cc
+        quic-applications/helper/quic-client-server-helper.cc
+        quic-applications/helper/quic-echo-helper.cc
+        quic-applications/model/quic-client.cc 
+        quic-applications/model/quic-echo-client.cc
+        quic-applications/model/quic-echo-server.cc
+        quic-applications/model/quic-server.cc   
+    HEADER_FILES
+        model/quic-congestion-ops.h
+        model/quic-socket.h
+        model/quic-socket-base.h
+        model/quic-socket-factory.h
+        model/quic-l4-protocol.h
+        model/quic-socket-rx-buffer.h
+        model/quic-socket-tx-buffer.h
+        model/quic-socket-tx-scheduler.h
+        model/quic-socket-tx-pfifo-scheduler.h
+        model/quic-socket-tx-edf-scheduler.h
+        model/quic-stream.h
+        model/quic-stream-base.h
+        model/quic-l5-protocol.h
+        model/quic-stream-tx-buffer.h
+        model/quic-stream-rx-buffer.h
+        model/quic-header.h
+        model/quic-subheader.h
+        model/quic-transport-parameters.h
+        model/quic-bbr.h
+        helper/quic-helper.h
+        model/windowed-filter.h
+        quic-applications/helper/quic-client-server-helper.h
+        quic-applications/helper/quic-echo-helper.h
+        quic-applications/model/quic-client.h
+        quic-applications/model/quic-echo-client.h
+        quic-applications/model/quic-echo-server.h
+        quic-applications/model/quic-server.h
+    LIBRARIES_TO_LINK ${libcore}
+    TEST_SOURCES
+        test/quic-rx-buffer-test.cc
+        test/quic-tx-buffer-test.cc
+        test/quic-header-test.cc
+        ${examples_as_tests_sources}
+)
